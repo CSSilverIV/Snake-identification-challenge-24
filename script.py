@@ -26,11 +26,12 @@ class PytorchWorker:
 
             model = timm.create_model(model_name, num_classes=number_of_categories, pretrained=False)
 
-            if not torch.cuda.is_available():
-                model_ckpt = torch.load(model_path, map_location=torch.device("cpu"))
-            else:
-                model_ckpt = torch.load(model_path)
+            # if not torch.cuda.is_available():
+            #     model_ckpt = torch.load(model_path, map_location=torch.device("cpu"))
+            # else:
+            #     model_ckpt = torch.load(model_path)
 
+            model_ckpt = torch.load(model_path, map_location=torch.device("cpu"))
             model.load_state_dict(model_ckpt)
 
             return model.to(device).eval()
