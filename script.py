@@ -29,7 +29,7 @@ class PytorchWorker:
             if not torch.cuda.is_available():
                 model_ckpt = torch.load(model_path, map_location=torch.device("cpu"))
             else:
-                model_ckpt = torch.load(model_path)["model"]
+                model_ckpt = torch.load(model_path)
 
             model.load_state_dict(model_ckpt)
 
