@@ -38,7 +38,7 @@ class PytorchWorker:
 
         self.model = _load_model(model_name, model_path)
 
-        self.transforms = T.Compose([T.Resize((224, 224)),
+        self.transforms = T.Compose([T.Resize((299, 299)),
                                      T.ToTensor(),
                                      T.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5])])
 
@@ -88,7 +88,7 @@ if __name__ == "__main__":
     MODEL_NAME = "tf_efficientnet_b1.ap_in1k"
 
     metadata_file_path = "./FungiCLEF2024_TestMetadata.csv"
-    test_metadata = pd.read_csv(metadata_file_path)[:100]
+    test_metadata = pd.read_csv(metadata_file_path)
 
     make_submission(
         test_metadata=test_metadata,
