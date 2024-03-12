@@ -67,9 +67,11 @@ def make_submission(test_metadata, model_path, model_name, output_csv_path="./su
 
         test_image = Image.open(image_path).convert("RGB")
 
-        logits = model.predict_image(test_image)
+        #logits = model.predict_image(test_image)
 
-        predictions.append(np.argmax(logits))
+        #predictions.append(np.argmax(logits))
+
+        predictions.append(0)
 
     test_metadata["class_id"] = predictions
 
