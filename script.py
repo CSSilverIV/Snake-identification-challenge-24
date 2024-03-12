@@ -21,8 +21,8 @@ class PytorchWorker:
         def _load_model(model_name, model_path):
 
             print("Setting up Pytorch Model")
-            device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-            print(f"Using devide: {device}")
+            self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+            print(f"Using devide: {self.device}")
 
             model = timm.create_model(model_name, num_classes=number_of_categories, pretrained=False)
 
@@ -31,10 +31,10 @@ class PytorchWorker:
             # else:
             #     model_ckpt = torch.load(model_path)
 
-            model_ckpt = torch.load(model_path, map_location=torch.device("cpu"))
+            model_ckpt = torch.load(model_path, map_location=self.device)
             model.load_state_dict(model_ckpt)
 
-            return model.to(device).eval()
+            return model.to(self.device).eval()
 
         self.model = _load_model(model_name, model_path)
 
@@ -50,7 +50,7 @@ class PytorchWorker:
         :return: A list with logits and confidences.
         """
 
-        logits = self.model(self.transforms(image).unsqueeze(0))
+        logits = self.model(self.transforms(image).unsqueeze(0).to(self.device))
 
         return logits.tolist()
 
